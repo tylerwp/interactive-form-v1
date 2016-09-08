@@ -4,11 +4,6 @@ $("#name").focus();
 var tshirtColorOptions = getColorSelectOptions(); //save original dropdown list
 
 
-//Create json object from #color
-
-    //use this object to re-populate based on #design selection
-
-
 /*
 
 Job Role section of the form. Reveal a text field when the "Other" option is selected from the "Job Role" drop down menu
@@ -71,13 +66,21 @@ function SetColorSelectOptions(search){
             var OptionsToFilter = JSON.stringify(tshirtColorOptions);
             var $color = $("#color");
             $color.empty(); // remove old options
-            $color.append('<option>Select Color</option>');
-            $.each(JSON.parse(OptionsToFilter), function(key,value) {
-                if(value.indexOf(search) !== -1){
-                    $color.append($("<option></option>")
-                    .attr("value", key).text(value));
-                }
-            });
+            if(search === 'None'){
+                //hide color options
+               $('#colors-js-puns').hide();
+            }else{
+                //Show color options
+                $('#colors-js-puns').show();
+                $color.append('<option>Select Color</option>');
+                $.each(JSON.parse(OptionsToFilter), function(key,value) {
+                    if(value.indexOf(search) !== -1){
+                        $color.append($("<option></option>")
+                        .attr("value", key).text(key).attr("style","background-color:" + key + ";"));
+                    }
+                });
+            }
+            
 }
 
 
