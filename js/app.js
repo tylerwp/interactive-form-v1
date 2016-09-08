@@ -15,7 +15,7 @@ Add placeholder text of "Your Title" for the field
 $("#title").on('change',function(){
     if(this.value == 'other'){
         console.log("other selected");
-        $("#title").parent().append('<input type="text" id="other-title" placeholder="Your Title">');
+        $("#title").parent().append('<input type="text" id="other-title" placeholder="Your Title" class="form-control">');
     }else{
         if($("#other-title").length){
             $("#other-title").remove();
@@ -69,6 +69,8 @@ function SetColorSelectOptions(search){
             if(search === 'None'){
                 //hide color options
                $('#colors-js-puns').hide();
+               //hide color view box
+               $('#color-view').remove();
             }else{
                 //Show color options
                 $('#colors-js-puns').show();
@@ -76,9 +78,15 @@ function SetColorSelectOptions(search){
                 $.each(JSON.parse(OptionsToFilter), function(key,value) {
                     if(value.indexOf(search) !== -1){
                         $color.append($("<option></option>")
-                        .attr("value", key).text(key).attr("style","background-color:" + key + ";"));
+                        .attr("value", key).text(key).attr("style","background-color:" + key + ";color:white;"));                       
+                        
                     }
                 });
+                 $color.on('change',function(){
+                            $('#color-view').remove();
+                            $('.shirt').append('<div id="color-view" style="float:left;background-color:' + $(this).val() + ';">&nbsp;</div>');                           
+                           console.log($(this).val());
+                        });
             }
             
 }

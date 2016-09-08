@@ -32,6 +32,12 @@ a {
   text-decoration: none;
 }
 
+#color-view{
+ border-radius: 10%;
+ padding:0px 30px 16px 30px;
+ margin-top: 26px;
+}
+
 /* ================================= 
   Form Element Styles
 ==================================== */

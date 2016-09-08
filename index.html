@@ -4,8 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Register for Full Stack Conf</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="css/style.css">    
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">  
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css"> 
+ 
 </head>
 <body>
 	<div class="container">
@@ -21,13 +23,13 @@
         <legend>Basic Info</legend>
         
         <label for="name">Name:</label>
-        <input type="text" id="name" name="user_name">
+        <input type="text" id="name" name="user_name" class="form-control">
         
         <label for="mail">Email:</label>
-        <input type="email" id="mail" name="user_email">
+        <input type="email" id="mail" name="user_email" class="form-control">
         
         <label for="title">Job Role</label>
-        <select id="title" name="user_title" >
+        <select id="title" name="user_title" class="form-control">
           <option value="full-stack js developer">Full Stack JavaScript Developer</option>
           <option value="front-end developer">Front End Developer</option>
           <option value="back-end developer">Back End Developer</option>
@@ -42,7 +44,7 @@
         
         <div>
           <label for="size">Size:</label>
-          <select id="size" name="user_size">
+          <select id="size" name="user_size" class="form-control">
             <option value="small">S</option>
             <option value="medium" selected>M</option>
             <option value="large">L</option>
@@ -52,17 +54,17 @@
 
         <div>
           <label for="design">Design:</label>
-          <select id="design" name="user_design">
+          <select id="design" name="user_design" class="form-control">
             <option>Select Theme</option>
             <option value="js puns">Theme - JS Puns</option>
             <option value="heart js">Theme - I &#9829; JS</option>
           </select>
         </div>
 
-        <div id="colors-js-puns" class="">
+        <div id="colors-js-puns">
           <label for="color">Color:</label>
-          <select id="color">
-               <option>Select Color</option>
+          <select id="color" class="form-control">
+            <option>Select Color</option>
             <option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>
             <option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option> 
             <option value="gold">Gold (JS Puns shirt only)</option> 
@@ -88,7 +90,7 @@
         <legend>Payment Info</legend>
 
         <label for="payment">I'm going to pay with:</label>
-        <select id="payment" name="user_payment">
+        <select id="payment" name="user_payment"  class="form-control">
           <option value="select_method">Select Payment Method</option>
           <option value="credit card">Credit Card</option>
           <option value="paypal">PayPal</option>
@@ -99,21 +101,21 @@
 
           <div class="col-6 col">
             <label for="cc-num">Card Number:</label>
-        	  <input id="cc-num" name="user_cc-num" type="text">
+        	  <input id="cc-num" name="user_cc-num" type="text" class="form-control">
           </div>
 
           <div class="col-3 col">
             <label for="zip">Zip Code:</label>
-            <input id="zip" name="user_zip" type="text"> 
+            <input id="zip" name="user_zip" type="text" class="form-control"> 
           </div>
 
           <div class="col-3 col">
             <label for="cvv">CVV:</label>
-            <input id="cvv" name="user_cvv" type="text"> 
+            <input id="cvv" name="user_cvv" type="text" class="form-control"> 
           </div>
 
           <label for="exp-month">Expiration Date:</label>
-          <select id="exp-month" name="user_exp-month">
+          <select id="exp-month" name="user_exp-month" class="form-control">
             <option value="1">1 - January</option>
             <option value="2">2 - February</option>
             <option value="3">3 - March</option>
@@ -128,7 +130,7 @@
             <option value="12">12 - December</option>          		          
           </select>
           <label for="exp-year">Expiration Year:</label>
-          <select id="exp-year" name="user_exp-year">
+          <select id="exp-year" name="user_exp-year"  class="form-control">
             <option value="2016">2016</option>
             <option value="2017">2017</option>
             <option value="2018">2018</option>
@@ -153,7 +155,8 @@
 
 	</div>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/app.js"></script>
-    <script type='text/javascript' src='js/select.js'></script>
+    
 </body>
 </html>
