@@ -3,15 +3,13 @@
 $("#name").focus();
 var tshirtColorOptions = getColorSelectOptions(); //save original dropdown list
 
-
 /*
-
-Job Role section of the form. Reveal a text field when the "Other" option is selected from the "Job Role" drop down menu
-Make sure you add an text input field.
-Use the id of "other-title" for the field
-Add placeholder text of "Your Title" for the field
-
+    Job Role section of the form. Reveal a text field when the "Other" option is selected from the "Job Role" drop down menu
+    Make sure you add an text input field.
+    Use the id of "other-title" for the field
+    Add placeholder text of "Your Title" for the field
 */
+
 $("#title").on('change',function(){
     if(this.value == 'other'){
         console.log("other selected");
@@ -25,14 +23,12 @@ $("#title").on('change',function(){
 
 //////////////////////////////////////////////////////////////////////////////
 
-
 $("#design").on('change',function(){
     //console.log($(this).val());
     var selectedShirt = $(this).val();
     displayShirtOptions(selectedShirt);   
     
 });
-
 
 
 function displayShirtOptions(selectedShirt){
@@ -72,6 +68,8 @@ function SetColorSelectOptions(search){
                //hide color view box
                $('#color-view').remove();
             }else{
+                //hide color view box
+               $('#color-view').remove();
                 //Show color options
                 $('#colors-js-puns').show();
                 $color.append('<option>Select Color</option>');
@@ -90,6 +88,18 @@ function SetColorSelectOptions(search){
             }
             
 }
+
+
+
+//loop through "Register for Activities" checkboxes 
+$(".activities").on("click",function(){
+    var list = $(this);
+    
+   // $(this).each('input',function(){
+    //        console.log(this);
+   // });
+});
+
 
 
 displayShirtOptions('');
