@@ -89,32 +89,95 @@ function SetColorSelectOptions(search){
             
 }
 
-
-
+var total = 0;
 //loop through "Register for Activities" checkboxes 
-//!!!change this to a function to run on load
-$(".activities").on("click",function(){
-    var list = $(this);
+function RegisterforActivitiesSetup(){    
         
-    $('input[type=checkbox]').each(function () {
-        //testing of input elements//////////
-        //get parent text set checked and disable testing
-        //console.log($(this).parent().text());
-        $(this).prop("checked",true);
-        $(this).prop( "disabled", true );
-        ////////////////////////////////////
+    $('input[type=checkbox]').each(function () {         
 
         //Add click event to each checkbox that will update checkbox list based on conditions and get pricing. 
+        $(this).change(function(){
+            console.log($(this).prop("checked") + '--' + $(this).parent().text());
+            RegisterforActivitiesUpdate($(this));
+        });
 
-        //get price of event
-        //var lastThree = id.substr(id.length - 5);
-            var tx  = $(this).parent().text();
-            console.log(tx.substr(tx.length - 3));
+        ///////////////////////////////////////////////////
+
+        //get price of event        
+            var tx  = $(this).parent().text();//get label text
+            total = total + parseInt(tx.substr(tx.length - 3));//get $$ from text
+       
     });
+
+    
    
-});
+}
+
+
+
+function RegisterforActivitiesUpdate(inputCheckbox){
+    
+    if(inputCheckbox.prop("checked")){
+
+         RegisterforActivitiesSetAccess(inputCheckbox,true);  
+
+    }else{
+
+        RegisterforActivitiesSetAccess(inputCheckbox,false);       
+
+    }
+}
+
+
+
+//compare the changed checkbox item with the list of checkboxes to determine if it should be disabled or enabled for conflicts
+function RegisterforActivitiesSetAccess(inputCheckbox,checked){
+
+        $('input[type=checkbox]').each(function () {
+        if(inputCheckbox.prop("name") !== $(this).prop("name")){
+            //Is not the select input so check for time conflics
+                //get parent text (label) and parse after '—' and end at ','
+                var SelectedSchedule = inputCheckbox.parent().text().split('—')[1].split(',')[0];
+                var CompareSchedule = $(this).parent().text();
+                
+                if(CompareSchedule.indexOf(SelectedSchedule) !== -1){                    
+                    //Enable event
+                    if(checked){
+                        $(this).prop( "disabled", true );
+                        $(this).parent().addClass("disZEvent");
+                    }else{
+                        $(this).prop( "disabled", false );
+                        $(this).parent().removeClass("disZEvent");
+                    }
+                }
+        }
+            
+    });
+    RegisterforActivitiesUpdateTotal();
+
+}
+
+
+
+
+function RegisterforActivitiesUpdateTotal(){
+    total = 0;//reset total
+     $('input[type=checkbox]').each(function () {
+         var inputCheckbox = $(this);
+         if(inputCheckbox.prop("checked")){
+            var Labeltext = inputCheckbox.parent().text();//get label text
+             total = total + parseInt(Labeltext.substr(Labeltext.length - 3));
+         }
+        
+     });
+     //apend total to 
+     $(".activitiesTotal").remove();
+     $(".activities").append('<legend class="activitiesTotal"><strong>Total:</strong>$' + total + '</legend>');
+     console.log(total);
+}
 
 
 
 displayShirtOptions('');
+RegisterforActivitiesSetup();
 
