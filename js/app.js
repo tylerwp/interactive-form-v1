@@ -92,12 +92,26 @@ function SetColorSelectOptions(search){
 
 
 //loop through "Register for Activities" checkboxes 
+//!!!change this to a function to run on load
 $(".activities").on("click",function(){
     var list = $(this);
-    
-   // $(this).each('input',function(){
-    //        console.log(this);
-   // });
+        
+    $('input[type=checkbox]').each(function () {
+        //testing of input elements//////////
+        //get parent text set checked and disable testing
+        //console.log($(this).parent().text());
+        $(this).prop("checked",true);
+        $(this).prop( "disabled", true );
+        ////////////////////////////////////
+
+        //Add click event to each checkbox that will update checkbox list based on conditions and get pricing. 
+
+        //get price of event
+        //var lastThree = id.substr(id.length - 5);
+            var tx  = $(this).parent().text();
+            console.log(tx.substr(tx.length - 3));
+    });
+   
 });
 
 
