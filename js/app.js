@@ -1,4 +1,3 @@
-
 //set focus first text field
 $("#name").focus();
 var tshirtColorOptions = getColorSelectOptions(); //save original dropdown list
@@ -13,10 +12,11 @@ var tshirtColorOptions = getColorSelectOptions(); //save original dropdown list
 $("#title").on('change',function(){
     if(this.value == 'other'){
         console.log("other selected");
-        $("#title").parent().append('<input type="text" id="other-title" placeholder="Your Title" class="form-control">');
+        $("#title").parent().append('<input type="text" id="other-title" placeholder="Your Title" name="other" class="form-control">');
     }else{
         if($("#other-title").length){
             $("#other-title").remove();
+            $("#other-title-error").remove();
         }
     }
 });
@@ -176,8 +176,61 @@ function RegisterforActivitiesUpdateTotal(){
      console.log(total);
 }
 
+//Form Validation //
+function FormValidationSetup(){  
+  $('#signupForm').parsley();
+   $('#name').parsley({
+        minlength: 10,
+        
+    });
+
+  
+}
+
+
+// Payment functions //////////////
+function PaymentViewSetup(){
+    //set default payment method to Credit Card    
+    $('option[value="credit card"]').attr('selected','selected');
+    $('#credit-card').show();
+    $('#paypal').hide();
+    $('#Bitcoin').hide();
+
+     $('#payment').on('change',function(){
+        var SelectValue = $(this).val();
+        switch(SelectValue) {
+        case 'paypal':        
+            $('#credit-card').hide();
+            $('#paypal').show();
+            $('#Bitcoin').hide();
+           //check validation before enabling button
+        break;
+        case 'bitcoin':
+            $('#credit-card').hide();
+            $('#paypal').hide();
+            $('#Bitcoin').show();
+           //check validation before enabling button
+        break;
+        case 'credit card':
+            $('#credit-card').show();
+            $('#paypal').hide();
+            $('#Bitcoin').hide();
+            //check validation before enabling button
+        break;
+        
+        }
+     });
+}
+
+function CreditCardValidationSetup(){
+    // $('button[type="submit"]').prop( "disabled", true );
+}
+
 
 
 displayShirtOptions('');
 RegisterforActivitiesSetup();
+PaymentViewSetup();
+CreditCardValidationSetup();
+FormValidationSetup();
 
