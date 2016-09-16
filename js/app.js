@@ -16,6 +16,7 @@ $("#title").on('change',function(){
     }else{
         if($("#other-title").length){
             $("#other-title").remove();
+            $('#other-error').remove();
             $("#other-title-error").remove();
         }
     }
@@ -83,7 +84,9 @@ function SetColorSelectOptions(search){
                  $color.on('change',function(){
                             $('#color-view').remove();
                             $('.shirt').append('<div id="color-view" style="float:left;background-color:' + $(this).val() + ';">&nbsp;</div>');                           
-                           console.log($(this).val());
+                           //run validation
+                           validateTshirt();
+                           //console.log($(this).val());
                         });
             }
             
@@ -176,16 +179,16 @@ function RegisterforActivitiesUpdateTotal(){
      console.log(total);
 }
 
-//Form Validation //
-function FormValidationSetup(){  
-  $('#signupForm').parsley();
-   $('#name').parsley({
-        minlength: 10,
-        
-    });
 
+
+
+$('form').on('click', 'button[type="submit"]', function(btnSubmit) {
   
-}
+  if (!formValidation()) {
+		btnSubmit.preventDefault();
+	} 
+});
+  
 
 
 // Payment functions //////////////
@@ -217,8 +220,10 @@ function PaymentViewSetup(){
             $('#Bitcoin').hide();
             //check validation before enabling button
         break;
-        
+                
         }
+        //validate payment method on change
+        validatePayment();
      });
 }
 
@@ -227,10 +232,9 @@ function CreditCardValidationSetup(){
 }
 
 
-
 displayShirtOptions('');
 RegisterforActivitiesSetup();
 PaymentViewSetup();
 CreditCardValidationSetup();
-FormValidationSetup();
+
 
