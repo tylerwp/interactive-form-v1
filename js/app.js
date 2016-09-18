@@ -175,8 +175,8 @@ function RegisterforActivitiesUpdateTotal(){
      });
      //apend total to 
      $(".activitiesTotal").remove();
-     $(".activities").append('<legend class="activitiesTotal"><strong>Total:</strong>$' + total + '</legend>');
-     console.log(total);
+     $(".activities").append('<div class="activitiesTotal ConfTotal"><strong>Total: </strong>$' + total + '</div>');
+     validateActivities();
 }
 
 

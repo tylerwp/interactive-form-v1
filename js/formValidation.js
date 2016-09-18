@@ -1,6 +1,6 @@
 
 // Form Validation /////////////////////////
-
+/*jshint bitwise: false*/
 
 //Validate Name
 function validateName(){
@@ -61,8 +61,8 @@ function validateEmail(){
             return true;
         }else{
             //not a valid email
-                // remove previous error
-                 $('#email-error').remove();
+            // remove previous error
+            $('#email-error').remove();
             //add error message
             $('#mail').after('<div id="email-error" class="error">This is not a valid email.</div>');
             //update name element style
@@ -149,13 +149,14 @@ function validateActivities(){
          if(!$('#activities-error').length){
             //add error message
             $('.activities legend').after('<div id="activities-error" class="error">You must select at least one activity.</div>');
-            //update name element style
-           // $('.activities legend').addClass('name-err');
+            
+           
         }
     }else{
+        //remove error if exists
         if($('#activities-error').length){
             $('#activities-error').remove();
-           // $('.activities legend').removeClass('name-err');
+           
         }
     }
 
@@ -169,11 +170,25 @@ function validateActivities(){
 function validatePayment(){
      var payment = $('#payment option:selected').val();
     if(payment === 'credit card'){
-        //Validate credit card number
+        var CreditInfoValid = true;
+        //Validate credit card number                        
+        if(!ValidateCreditCard()){
+            CreditInfoValid = false;
+        }
         //Validate zip
+        if(!ValidateCreditCardZip()){
+            CreditInfoValid = false;
+        }          
         //Validate CVV
-        //Validate Exp
-        return false;
+        if(!ValidateCreditCardCVV()){
+            CreditInfoValid = false;
+        }
+        //Validate Exp          
+        if(!validateCreditCardExp()){
+            CreditInfoValid = false;
+        }
+
+        return CreditInfoValid;
     }else{
         if(payment === 'select_method'){
             if(!$('#payment-error').length){
@@ -193,6 +208,166 @@ function validatePayment(){
 
     }
 }
+
+
+//Validate Creit Card
+function ValidateCreditCard(){
+    var cc = $('#cc-num').val();    
+    if(!cc.trim()){
+        //display error to DOM
+        //if error does not exist
+        if(!$('#cc-error').length){
+            //add error message
+            $('#credit-card .col:eq(0)').append('<div id="cc-error" class="error">Credit Card is required.</div>');
+            //update name element style
+            $('#cc-num').addClass('name-err');
+        }
+        return false;
+    }else{
+        //Validate credit format
+        var validatecc = luhnChk($('#cc-num').val());       
+        //if valid credit card clear errors.
+        if(validatecc){
+            //call function to clear error from DOM
+            if($('#cc-error').length){
+                $('#cc-error').remove();
+                $('#cc-num').removeClass('name-err');                
+            }
+            return true;
+        }else{
+            //Invalid Credit Card number.
+            $('#cc-error').remove();
+            //add error message
+            $('#credit-card .col:eq(0)').append('<div id="cc-error" class="error">Invalid Credit Card number.</div>');
+            //update name element style
+            $('#cc-num').addClass('name-err');            
+                return false;
+            }
+
+       
+    }
+}
+
+
+//Validate Zip
+function ValidateCreditCardZip(){
+    var zip = $('#zip').val();    
+    if(!zip.trim()){
+        //display error to DOM
+        //if error does not exist
+        if(!$('#zip-error').length){
+            //add error message
+            $('#credit-card .col:eq(1)').append('<div id="zip-error" class="error">Zip required.</div>');
+            //update name element style
+            $('#zip').addClass('name-err');
+        }
+        return false;
+    }else{
+            if(!isNaN(zip)){
+            //call function to clear error from DOM
+                if($('#zip-error').length){
+                    $('#zip-error').remove();
+                    $('#zip').removeClass('name-err');
+                }
+                return true;
+            }else{
+                //clear previous errors
+                $('#zip-error').remove();
+                 //add error message
+                $('#credit-card .col:eq(1)').append('<div id="zip-error" class="error">Invalid Zip.</div>');
+                //update name element style
+                $('#zip').addClass('name-err');
+                return false;
+            }
+        
+        
+    }
+}
+
+//Validate CVV
+function ValidateCreditCardCVV(){
+    var cvv = $('#cvv').val();    
+    if(!cvv.trim()){
+        //display error to DOM
+        //if error does not exist
+        if(!$('#cvv-error').length){
+            //add error message
+            $('#credit-card .col:eq(2)').append('<div id="cvv-error" class="error">CVV required.</div>');
+            //update name element style
+            $('#cvv').addClass('name-err');
+        }
+        return false;
+    }else{
+             if(!isNaN(cvv) && cvv.length === 3){
+            //call function to clear error from DOM
+                if($('#cvv-error').length){
+                    $('#cvv-error').remove();
+                    $('#cvv').removeClass('name-err');
+                }
+                return true;
+             }else{
+                  //clear previous errors
+                 $('#cvv-error').remove();
+                //add error message
+                $('#credit-card .col:eq(2)').append('<div id="cvv-error" class="error">Invalid CVV.</div>');
+                //update name element style
+                $('#cvv').addClass('name-err');
+                return false;
+             }
+        
+    }
+}
+
+function validateCreditCardExp(){
+     var expMonth = parseInt($('#exp-month option:selected').val());
+    // var expYear = parseInt($('#exp-year option:selected').val());
+
+     var datenow = new Date();
+     if(datenow.getMonth() >= expMonth){
+          if(!$('#exp-error').length){
+            //add error message
+            $('#exp-year').after('<div id="exp-error" class="error">Check Expiration Date.</div>');
+            //update name element style
+            $('#exp-month').addClass('name-err');
+            $('#exp-year').addClass('name-err');
+          }
+          return false;
+     }else{
+        
+            $('#exp-error').remove();
+            $('#exp-month').removeClass('name-err');
+            $('#exp-year').removeClass('name-err');
+            return true;
+        
+     }     
+     
+
+}
+
+/////////////////////////////////////////////////////////////////////////
+/**
+ * Luhn algorithm in JavaScript: validate credit card number supplied as string of numbers
+ * @author ShirtlessKirk. Copyright (c) 2012.
+ * @license WTFPL (http://www.wtfpl.net/txt/copying)
+ * //http://www.paypalobjects.com/en_US/vhelp/paypalmanager_help/credit_card_numbers.htm
+ */
+var luhnChk = (function (arr) {
+    return function (ccNum) {
+        var 
+            len = ccNum.length,
+            bit = 1,
+            sum = 0,
+            val;
+
+        while (len) {
+            val = parseInt(ccNum.charAt(--len), 10);
+            sum += (bit ^= 1) ? arr[val] : val;
+        }
+
+        return sum && sum % 10 === 0;
+    };
+}([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
+////////////////////////////////////////////////////////////////////////////
 
 
 

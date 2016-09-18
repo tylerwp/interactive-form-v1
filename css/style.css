@@ -38,6 +38,17 @@ a {
  margin-top: 26px;
 }
 
+.ConfTotal{
+	padding: 15px;
+	margin-bottom: 20px;
+	border:1px solid transparent;
+	border-radius: 4px;
+	color:rgb(42, 61, 95);
+	background-color:rgba(80, 168, 200, 0.3);
+	border-color: #87a7cc;
+	 font-size: 22px;
+}
+
 /* ================================= 
   Form Element Styles
 ==================================== */
@@ -80,6 +91,7 @@ label {
 	color: #000;
 	display: block;
 	margin-bottom: .5em;
+	clear:both;
 }
 
 input,
