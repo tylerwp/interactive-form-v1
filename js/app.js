@@ -1,20 +1,17 @@
-//set focus first text field
+//set focus to first text field
 $("#name").focus();
 var tshirtColorOptions = getColorSelectOptions(); //save original dropdown list
 
 /*
-    Job Role section of the form. Reveal a text field when the "Other" option is selected from the "Job Role" drop down menu
-    Make sure you add an text input field.
-    Use the id of "other-title" for the field
-    Add placeholder text of "Your Title" for the field
+    Reveal a text field when the "Other" option is selected from the "Job Role" drop down menu
 */
-
 $("#title").on('change',function(){
     if(this.value == 'other'){
-        console.log("other selected");
+        //add other title field
         $("#title").parent().append('<input type="text" id="other-title" placeholder="Your Title" name="other" class="form-control">');
     }else{
         if($("#other-title").length){
+            //other title has values so remove error messages 
             $("#other-title").remove();
             $('#other-error').remove();
             $("#other-title-error").remove();
@@ -22,16 +19,20 @@ $("#title").on('change',function(){
     }
 });
 
-//////////////////////////////////////////////////////////////////////////////
+
 
 $("#design").on('change',function(){
-    //console.log($(this).val());
+    // add/update color options when design selection changes.
     var selectedShirt = $(this).val();
     displayShirtOptions(selectedShirt);   
     
 });
 
-
+/**
+* switch triggers functions based on Object value to reveal color options.
+*
+* @param {Object.<string>} select field - #design.
+*/
 function displayShirtOptions(selectedShirt){
     
     switch(selectedShirt) {
@@ -48,7 +49,10 @@ function displayShirtOptions(selectedShirt){
 }
 
 
-
+/**
+* return Object array from color select element.
+*
+*/
 function getColorSelectOptions(){
     var select = $('#color');
     var obj = {};
@@ -59,6 +63,12 @@ function getColorSelectOptions(){
     return obj;    
 }
 
+/**
+* Convert object tshirtColorOptions to JSON and filter 
+* results to new select options element to display color choices.
+*
+* @param {string} t-shirt options to filter by.
+*/
 function SetColorSelectOptions(search){
             var OptionsToFilter = JSON.stringify(tshirtColorOptions);
             var $color = $("#color");
@@ -92,8 +102,13 @@ function SetColorSelectOptions(search){
             
 }
 
+// total for activities.
 var total = 0;
-//loop through "Register for Activities" checkboxes 
+
+/**
+* loop through "Register for Activities" checkboxes
+*
+*/
 function RegisterforActivitiesSetup(){    
         
     $('input[type=checkbox]').each(function () {         
@@ -104,9 +119,7 @@ function RegisterforActivitiesSetup(){
             RegisterforActivitiesUpdate($(this));
         });
 
-        ///////////////////////////////////////////////////
-
-        //get price of event        
+        //get price of event and add to totals.     
             var tx  = $(this).parent().text();//get label text
             total = total + parseInt(tx.substr(tx.length - 3));//get $$ from text
        
@@ -117,7 +130,11 @@ function RegisterforActivitiesSetup(){
 }
 
 
-
+/**
+* function for clicked checkbox event to check the state of the element. 
+*
+* @param {Object.<string>} checkbox element.
+*/
 function RegisterforActivitiesUpdate(inputCheckbox){
     
     if(inputCheckbox.prop("checked")){
@@ -133,7 +150,12 @@ function RegisterforActivitiesUpdate(inputCheckbox){
 
 
 
-//compare the changed checkbox item with the list of checkboxes to determine if it should be disabled or enabled for conflicts
+/**
+* compare the changed checkbox item with the list of checkboxes to determine if it should be disabled or enabled for conflicts.
+*
+* @param {Object.<string>} checkbox element.
+* @param {bool} checked - Condition to determine state of checkboxes 
+*/
 function RegisterforActivitiesSetAccess(inputCheckbox,checked){
 
         $('input[type=checkbox]').each(function () {
@@ -163,6 +185,10 @@ function RegisterforActivitiesSetAccess(inputCheckbox,checked){
 
 
 
+/**
+* Update totals based on checked checkboxes. 
+*
+*/
 function RegisterforActivitiesUpdateTotal(){
     total = 0;//reset total
      $('input[type=checkbox]').each(function () {
@@ -181,7 +207,7 @@ function RegisterforActivitiesUpdateTotal(){
 
 
 
-
+//set click event for submit button
 $('form').on('click', 'button[type="submit"]', function(btnSubmit) {
   
   if (!formValidation()) {
@@ -191,14 +217,17 @@ $('form').on('click', 'button[type="submit"]', function(btnSubmit) {
   
 
 
-// Payment functions //////////////
+/**
+* Setup payment view and change events.
+*
+*/
 function PaymentViewSetup(){
     //set default payment method to Credit Card    
     $('option[value="credit card"]').attr('selected','selected');
     $('#credit-card').show();
     $('#paypal').hide();
     $('#Bitcoin').hide();
-
+    //hide or display payment method based on selection.
      $('#payment').on('change',function(){
         var SelectValue = $(this).val();
         switch(SelectValue) {
@@ -206,19 +235,19 @@ function PaymentViewSetup(){
             $('#credit-card').hide();
             $('#paypal').show();
             $('#Bitcoin').hide();
-           //check validation before enabling button
+           
         break;
         case 'bitcoin':
             $('#credit-card').hide();
             $('#paypal').hide();
             $('#Bitcoin').show();
-           //check validation before enabling button
+           
         break;
         case 'credit card':
             $('#credit-card').show();
             $('#paypal').hide();
             $('#Bitcoin').hide();
-            //check validation before enabling button
+            
         break;
                 
         }
@@ -227,14 +256,12 @@ function PaymentViewSetup(){
      });
 }
 
-function CreditCardValidationSetup(){
-    // $('button[type="submit"]').prop( "disabled", true );
-}
 
 
+//setup views for t-shirts, activities and payment method.
 displayShirtOptions('');
 RegisterforActivitiesSetup();
 PaymentViewSetup();
-CreditCardValidationSetup();
+
 
 
